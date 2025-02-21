@@ -1,18 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const axios = require('axios');
+// routes/printful.js
+import express from "express";
+import axios from "axios";
 
-router.post('/order', async (req, res) => {
+const router = express.Router();
+
+router.post("/order", async (req, res) => {
   try {
     // Extract dynamic decal positioning along with other fields.
     const { variantId, color, designUrl, recipient, designPosition } = req.body;
 
     // Set default design position values if none are provided.
     const defaultPosition = {
-      top: 0,    // offset from the top of the print area
-      left: 0,     // offset from the left of the print area
-      width: 900, // width of your design within that area
-      height: 900 // height of your design within that area
+      top: 0,
+      left: 0,
+      width: 900,
+      height: 900
     };
 
     // Use the provided designPosition or default to our hard-coded values.
@@ -39,13 +41,10 @@ router.post('/order', async (req, res) => {
           files: [
             {
               url: designUrl,
-              placement: 'front', // You can change this to 'back', 'sleeve_right', etc.
+              placement: 'front',
               position: {
-                // Assuming these are static dimensions of the print area:
-                area_width: 1800,  // total width of the print area on the product
-                area_height: 2400, // total height of the print area on the product
-
-                // Use the dynamic values provided from the front end:
+                area_width: 1800,
+                area_height: 2400,
                 width: dynamicPosition.width,
                 height: dynamicPosition.height,
                 top: dynamicPosition.top,
@@ -59,8 +58,7 @@ router.post('/order', async (req, res) => {
         },
       ],
       submittedAt: adjustedTime,
-      // Uncomment the next line to confirm the order immediately if desired:
-      // confirm: 1,
+      // confirm: 1, // Uncomment to auto-confirm the order
     };
 
     // Make the API request to Printful's orders endpoint.
@@ -85,4 +83,4 @@ router.post('/order', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
