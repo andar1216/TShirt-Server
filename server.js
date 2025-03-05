@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import Stripe from "stripe";
+import picturesRoute from "./routes/pictures.js";
 
 // Setup __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -17,11 +17,6 @@ if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PUBLISHABLE_KEY) {
   console.error("Missing Stripe API keys in environment variables.");
   process.exit(1);
 }
-
-// Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-08-16",
-});
 
 // Enable CORS for specified origins
 const allowedOrigins = [
@@ -44,27 +39,15 @@ app.use(express.json());
 // Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, "public")));
 
-// Import routes using ES module syntax
-import productsRoute from "./routes/products.js"; // NEW
+// Import other routes using ES module syntax
+import productsRoute from "./routes/products.js";
 import printfulRoutes from "./routes/printful.js";
+import stripeRoutes from "./routes/stripe.js"; // NEW: Import Stripe routes
 
-// Stripe route to create a PaymentIntent
-app.post("/create-payment-intent", async (req, res) => {
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      currency: "USD",
-      amount: 1999, // $19.99 in cents
-      automatic_payment_methods: { enabled: true },
-    });
-    res.json({ clientSecret: paymentIntent.client_secret });
-  } catch (error) {
-    console.error("Error creating PaymentIntent:", error);
-    res.status(400).json({ error: { message: error.message } });
-  }
-});
-
-// Mount the products route at /api/products
+// Mount the routes
 app.use("/api/products", productsRoute);
+app.use("/api/pictures", picturesRoute);
+app.use("/api/stripe", stripeRoutes); // Mount the Stripe routes at /api/stripe
 
 // Route to send the publishable Stripe key to the client
 app.get("/config", (req, res) => {
