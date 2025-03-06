@@ -22,8 +22,19 @@ router.get('/', (req, res) => {
       id: 2,
       name: 'Example Image 2',
       url: '/images/walk.jpg'
-    }
+    },
+    {
+      id: 3,
+      name: 'Example Image 3',
+      url: '/images/wawa.png'
+    },
+    {
+      id: 4,
+      name: 'Example Image 4',
+      url: '/images/threejs.png'
+    },
   ];
+  
   res.json(pictures);
 });
 
