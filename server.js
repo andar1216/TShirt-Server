@@ -133,7 +133,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Start the Express server on port 5252
+// Start the Express server on port 5252 gooba
 const PORT = process.env.PORT || 5252;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on http://localhost:${PORT}`);
