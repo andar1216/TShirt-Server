@@ -25,14 +25,14 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build & tag image
+        working-directory: server
         run: |
           IMAGE_URI=…
           docker build \
-            -f server/Dockerfile \
             -t $IMAGE_URI:latest \
             -t $IMAGE_URI:${{ github.sha }} \
-            server/
-            
+            .
+
       - name: Push image to ECR
         run: |
           IMAGE_URI=${{ steps.ecr-login.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
