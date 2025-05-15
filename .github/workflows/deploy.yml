@@ -26,9 +26,13 @@ jobs:
 
       - name: Build & tag image
         run: |
-          IMAGE_URI=${{ steps.ecr-login.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
-          docker build -t $IMAGE_URI:latest -t $IMAGE_URI:${{ github.sha }} .
-
+          IMAGE_URI=…
+          docker build \
+            -f server/Dockerfile \
+            -t $IMAGE_URI:latest \
+            -t $IMAGE_URI:${{ github.sha }} \
+            server/
+            
       - name: Push image to ECR
         run: |
           IMAGE_URI=${{ steps.ecr-login.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
