@@ -37,7 +37,6 @@ jobs:
             tshirt-app/server/
           docker push $IMAGE_URI:latest
           docker push $IMAGE_URI:${{ github.sha }}
-
       - name: Set image tag for deploy
         run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
