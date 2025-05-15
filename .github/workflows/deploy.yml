@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Debug workspace layout
         run: |
-          echo ">>> PWD: $(pwd)"
+          echo "Working dir: $(pwd)"
+          echo "Contents of workspace:"
           ls -R .
 
       - name: Configure AWS credentials
