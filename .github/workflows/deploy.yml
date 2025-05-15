@@ -10,12 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Debug workspace layout
-        run: |
-          echo "Working dir: $(pwd)"
-          echo "Contents of workspace:"
-          ls -R .
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -31,12 +25,12 @@ jobs:
         run: |
           IMAGE_URI=${{ steps.ecr-login.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
           docker build \
-            -f tshirt-app/server/Dockerfile \
             -t $IMAGE_URI:latest \
             -t $IMAGE_URI:${{ github.sha }} \
-            tshirt-app/server/
+            .
           docker push $IMAGE_URI:latest
           docker push $IMAGE_URI:${{ github.sha }}
+
       - name: Set image tag for deploy
         run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
