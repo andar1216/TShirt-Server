@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ←– this injects your private key and starts ssh-agent for you
+      # ←– injects your private key into ssh-agent
       - name: Load SSH key into ssh-agent
         uses: webfactory/ssh-agent@v0.5.4
         with:
@@ -28,9 +28,10 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/ubuntu/your-backend-folder
+          ssh -o StrictHostKeyChecking=no \
+              ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/ubuntu/documents/tshirt-app/server
             git pull origin master
             npm install
-            pm2 restart all || pm2 start index.js --name your-backend-name
+            pm2 restart all || pm2 start index.js --name tshirt-app-server
           EOF
