@@ -26,12 +26,15 @@ jobs:
           mkdir -p $HOME/.ssh
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> $HOME/.ssh/known_hosts || true
 
-      - name: Deploy via SSH
-        run: |
-          ssh -o StrictHostKeyChecking=no \
-              ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/ubuntu/documents/tshirt-app/server
-            git pull origin master
-            npm install
-            pm2 restart all || pm2 start index.js --name tshirt-app-server
-          EOF
+          - name: Deploy via SSH
+          run: |
+            ssh -o StrictHostKeyChecking=no \
+                -o BatchMode=yes \
+                -o ConnectTimeout=5 \
+                ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+              cd /home/ubuntu/documents/tshirt-app/server
+              git pull origin master
+              npm install
+              pm2 restart all || pm2 start index.js --name tshirt-app-server
+            EOF
+        
