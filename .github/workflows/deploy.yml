@@ -19,7 +19,7 @@ jobs:
 
       - name: Log in to ECR
         id: ecr-login
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build & push to ECR
         run: |
@@ -32,9 +32,13 @@ jobs:
           docker push $IMAGE_URI:${{ github.sha }}
 
   deploy:
-    name: Deploy to EC2
+    name: Deploy to EC2 (self-hosted)
     needs: build
-    runs-on: [ self-hosted, linux ]
+    runs-on: 
+      - self-hosted
+      - linux
+      - x64
+      - ec2
 
     steps:
       - name: Configure AWS credentials
@@ -46,17 +50,17 @@ jobs:
 
       - name: Log in to ECR
         id: ecr-login-deploy
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Pull new image
         run: |
           IMAGE_URI=${{ steps.ecr-login-deploy.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
-          docker pull $IMAGE_URI:${GITHUB_SHA}
+          docker pull $IMAGE_URI:${{ github.sha }}
 
       - name: Stop & remove old container
         run: |
           docker stop nodejs-backend || true
-          docker rm   nodejs-backend  || true
+          docker rm   nodejs-backend || true
 
       - name: Start container
         run: |
@@ -66,4 +70,4 @@ jobs:
             -p 5000:5000 \
             -e NODE_ENV=production \
             -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
-            $IMAGE_URI:${GITHUB_SHA}
+            $IMAGE_URI:${{ github.sha }}
