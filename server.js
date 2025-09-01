@@ -7,7 +7,6 @@ import pkg from "pg";
 import bcrypt from "bcryptjs";
 
 const { Pool } = pkg;
-
 // Setup __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,60 +14,70 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // -----------------
+// Database config
+// -----------------
+// let poolConfig;
+
+// if (process.env.DATABASE_URL) {
+//   // Production on AWS RDS
+//   poolConfig = {
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: { rejectUnauthorized: false }
+//   };
+// } else {
+//   // Local development
+//   poolConfig = {
+//     host:     process.env.PG_HOST     || "localhost",
+//     port:     +process.env.PG_PORT    || 5432,
+//     user:     process.env.PG_USER     || "postgres",
+//     password: process.env.PG_PASSWORD || "",
+//     database: process.env.PG_DATABASE || "postgres",
+//   };
+// }
+
+// export const pool = new Pool(poolConfig);
+
+// pool.connect((err, client, release) => {
+//   if (err) {
+//     console.error("Error acquiring client", err.stack);
+//     process.exit(1);
+//   }
+//   console.log("Connected to PostgreSQL database");
+//   release();
+// });
+
+// -----------------
 // Middleware & CORS
 // -----------------
 if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PUBLISHABLE_KEY) {
-  console.error("❌ Missing Stripe API keys in environment variables.");
+  console.error("Missing Stripe API keys in environment variables.");
   process.exit(1);
 }
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "http://localhost:5174",   // dev
-  "http://localhost:5175",   // dev
-  "http://localhost:5176",   // dev 
-  "http://127.0.0.1:5173",   // dev alt
-  "https://sattire.store",   // prod
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "http://localhost:5176",
 ];
-
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // allow requests with no origin (like curl, Postman, or server-side calls)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("❌ Not allowed by CORS"));
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
     credentials: true,
   })
 );
-
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // -----------------
-// API Routes
+// Route handlers
 // -----------------
-import productsRoute  from "./routes/products.js";
-import picturesRoute  from "./routes/pictures.js";
-import printfulRoutes from "./routes/printful.js";
-import stripeRoutes   from "./routes/stripe.js";
-import userRoutes     from "./routes/users/user.js";
-
-// Stripe config endpoint (for frontend publishable key)
-app.get("/api/config", (req, res) => {
-  res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY });
-});
-
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", time: new Date().toISOString() });
-});
-
+import productsRoute     from "./routes/products.js";
+import picturesRoute     from "./routes/pictures.js";
+import printfulRoutes    from "./routes/printful.js";
+import stripeRoutes      from "./routes/stripe.js";
+import userRoutes        from "./routes/users/user.js";
 
 app.use("/api/products",  productsRoute);
 app.use("/api/pictures",  picturesRoute);
@@ -79,26 +88,26 @@ app.use("/api/users",     userRoutes);
 // -----------------
 // Registration
 // -----------------
-app.post("/api/register", async (req, res) => {
+app.post('/api/register', async (req, res) => {
   const { fullName, username, email, password } = req.body;
   if (!fullName || !username || !email || !password) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({ error: 'Missing required fields' });
   }
 
   try {
     const userCheck = await pool.query(
-      "SELECT id FROM users WHERE username = $1",
+      'SELECT id FROM users WHERE username = $1',
       [username]
     );
     if (userCheck.rows.length) {
-      return res.status(400).json({ error: "Username taken" });
+      return res.status(400).json({ error: 'Username taken' });
     }
     const emailCheck = await pool.query(
-      "SELECT id FROM users WHERE email = $1",
+      'SELECT id FROM users WHERE email = $1',
       [email]
     );
     if (emailCheck.rows.length) {
-      return res.status(400).json({ error: "Email taken" });
+      return res.status(400).json({ error: 'Email taken' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -112,17 +121,24 @@ app.post("/api/register", async (req, res) => {
     );
 
     res.status(201).json({
-      message: "User created successfully",
-      userId: result.rows[0].id,
+      message: 'User created successfully',
+      userId:  result.rows[0].id
     });
   } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 // -----------------
-// SPA fallback (React build)
+// Stripe config endpoint
+// -----------------
+app.get("/config", (req, res) => {
+  res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY });
+});
+
+// -----------------
+// SPA fallback
 // -----------------
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -133,5 +149,5 @@ app.get("*", (req, res) => {
 // -----------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅ Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
