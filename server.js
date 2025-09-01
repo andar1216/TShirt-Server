@@ -24,19 +24,30 @@ if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PUBLISHABLE_KEY) {
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:5175",
-  "http://localhost:5176",
-  "http://54.242.48.131:5000",
-  "http://sattire.store" 
+  "http://localhost:5174",   // dev
+  "http://localhost:5175",   // dev
+  "http://localhost:5176",   // dev 
+  "http://127.0.0.1:5173",   // dev alt
+  "https://sattire.store",   // prod
 ];
+
 app.use(
   cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST"],
+    origin: (origin, callback) => {
+      // allow requests with no origin (like curl, Postman, or server-side calls)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("❌ Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -53,6 +64,11 @@ import userRoutes     from "./routes/users/user.js";
 app.get("/api/config", (req, res) => {
   res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY });
 });
+
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", time: new Date().toISOString() });
+});
+
 
 app.use("/api/products",  productsRoute);
 app.use("/api/pictures",  picturesRoute);
