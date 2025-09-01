@@ -79,6 +79,21 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // -----------------
+// Request logging middleware
+// -----------------
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// -----------------
+// Helper: async error wrapper
+// -----------------
+const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
+
+// -----------------
 // Route handlers
 // -----------------
 import productsRoute from "./routes/products.js";
@@ -96,49 +111,53 @@ app.use("/api/users", userRoutes);
 // -----------------
 // Registration (requires DB — will fail if pool is still commented out)
 // -----------------
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", asyncHandler(async (req, res) => {
   const { fullName, username, email, password } = req.body;
   if (!fullName || !username || !email || !password) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
-  try {
-    // ⚠️ Will throw if pool is not enabled
-    const userCheck = await pool.query(
-      "SELECT id FROM users WHERE username = $1",
-      [username]
-    );
-    if (userCheck.rows.length) {
-      return res.status(400).json({ error: "Username taken" });
-    }
-
-    const emailCheck = await pool.query(
-      "SELECT id FROM users WHERE email = $1",
-      [email]
-    );
-    if (emailCheck.rows.length) {
-      return res.status(400).json({ error: "Email taken" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await pool.query(
-      `INSERT INTO users
-         (full_name, username, email, password)
-       VALUES
-         ($1, $2, $3, $4)
-       RETURNING id`,
-      [fullName, username, email, hashedPassword]
-    );
-
-    res.status(201).json({
-      message: "User created successfully",
-      userId: result.rows[0].id,
-    });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).json({ error: "Internal server error" });
+  // ⚠️ Will throw if pool is not enabled
+  const userCheck = await pool.query(
+    "SELECT id FROM users WHERE username = $1",
+    [username]
+  );
+  if (userCheck.rows.length) {
+    return res.status(400).json({ error: "Username taken" });
   }
+
+  const emailCheck = await pool.query(
+    "SELECT id FROM users WHERE email = $1",
+    [email]
+  );
+  if (emailCheck.rows.length) {
+    return res.status(400).json({ error: "Email taken" });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const result = await pool.query(
+    `INSERT INTO users
+       (full_name, username, email, password)
+     VALUES
+       ($1, $2, $3, $4)
+     RETURNING id`,
+    [fullName, username, email, hashedPassword]
+  );
+
+  res.status(201).json({
+    message: "User created successfully",
+    userId: result.rows[0].id,
+  });
+}));
+
+
+// -----------------
+// Test error route
+// -----------------
+app.get("/api/test-error", (req, res) => {
+  throw new Error("Manual test error from /api/test-error");
 });
+
 
 // -----------------
 // Stripe config endpoint
@@ -152,6 +171,14 @@ app.get("/api/config", (req, res) => {
 // -----------------
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// -----------------
+// Global error handler
+// -----------------
+app.use((err, req, res, next) => {
+  console.error("❌ Error:", err.stack || err);
+  res.status(500).json({ error: err.message || "Internal Server Error" });
 });
 
 // -----------------
