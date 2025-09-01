@@ -62,7 +62,7 @@ jobs:
           docker stop nodejs-backend || true
           docker rm   nodejs-backend || true
 
-      - name: Start container
+      - name: Start container with secrets
         run: |
           IMAGE_URI=${{ steps.ecr-login-deploy.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
           docker run -d \
@@ -70,4 +70,10 @@ jobs:
             -p 5000:5000 \
             -e NODE_ENV=production \
             -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
+            -e STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} \
             $IMAGE_URI:${{ github.sha }}
+
+      - name: Verify container is running
+        run: |
+          sleep 5
+          curl -f http://localhost:5000/api/config
