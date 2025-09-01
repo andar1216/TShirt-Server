@@ -81,6 +81,15 @@ import printfulRoutes    from "./routes/printful.js";
 import stripeRoutes      from "./routes/stripe.js";
 import userRoutes        from "./routes/users/user.js";
 
+// ✅ Config route must be BEFORE the SPA fallback
+app.get("/api/config", (req, res) => {
+  res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY });
+});
+
+// -----------------
+// SPA fallback
+// -----------------
+
 app.use("/api/products",  productsRoute);
 app.use("/api/pictures",  picturesRoute);
 app.use("/api/printful",  printfulRoutes);
@@ -142,10 +151,10 @@ app.get("/config", (req, res) => {
 // -----------------
 // SPA fallback
 // -----------------
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
