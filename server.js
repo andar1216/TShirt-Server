@@ -19,35 +19,36 @@ const app = express();
 // -----------------
 // Database config (commented for now)
 // -----------------
-// let poolConfig;
 
-// if (process.env.DATABASE_URL) {
-//   // Production on AWS RDS
-//   poolConfig = {
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: { rejectUnauthorized: false }
-//   };
-// } else {
-//   // Local development
-//   poolConfig = {
-//     host:     process.env.PG_HOST     || "localhost",
-//     port:     +process.env.PG_PORT    || 5432,
-//     user:     process.env.PG_USER     || "postgres",
-//     password: process.env.PG_PASSWORD || "",
-//     database: process.env.PG_DATABASE || "postgres",
-//   };
-// }
+let poolConfig;
 
-// export const pool = new Pool(poolConfig);
+if (process.env.DATABASE_URL) {
+  // Production on AWS RDS
+  poolConfig = {
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  };
+} else {
+  // Local development
+  poolConfig = {
+    host:     process.env.PG_HOST     || "localhost",
+    port:     +process.env.PG_PORT    || 5432,
+    user:     process.env.PG_USER     || "postgres",
+    password: process.env.PG_PASSWORD || "",
+    database: process.env.PG_DATABASE || "postgres",
+  };
+}
 
-// pool.connect((err, client, release) => {
-//   if (err) {
-//     console.error("Error acquiring client", err.stack);
-//     process.exit(1);
-//   }
-//   console.log("Connected to PostgreSQL database");
-//   release();
-// });
+export const pool = new Pool(poolConfig);
+
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error("Error acquiring client", err.stack);
+    process.exit(1);
+  }
+  console.log("Connected to PostgreSQL database");
+  release();
+});
 
 // -----------------
 // Middleware & CORS
@@ -184,7 +185,7 @@ app.use((err, req, res, next) => {
 // -----------------
 // Boot server
 // -----------------
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5252;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server is running on http://localhost:${PORT}`);
 });
