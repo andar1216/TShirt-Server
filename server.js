@@ -54,6 +54,8 @@ if (process.env.NODE_ENV === "production") {
   };
 }
 
+console.log("Pool Config", poolConfig);
+
 export const pool = new Pool(poolConfig);
 
 pool.connect((err, client, release) => {
