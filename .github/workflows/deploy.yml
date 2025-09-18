@@ -67,7 +67,7 @@ jobs:
           IMAGE_URI=${{ steps.ecr-login-deploy.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
           docker run -d \
             --name nodejs-backend \
-            -p 5000:5000 \
+            -p 5252:5252 \
             -e NODE_ENV=production \
             -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
             -e STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} \
@@ -81,7 +81,7 @@ jobs:
       - name: Verify container is running
         run: |
           sleep 5
-          curl -f http://localhost:5000/api/config || (docker logs nodejs-backend && exit 1)
+          curl -f http://localhost:5252/api/config || (docker logs nodejs-backend && exit 1)
 
 
 
