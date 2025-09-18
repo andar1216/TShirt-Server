@@ -38,6 +38,7 @@ jobs:
       - self-hosted
       - linux
       - x64
+      - ec2
 
     steps:
       - name: Configure AWS credentials
@@ -81,3 +82,7 @@ jobs:
         run: |
           sleep 5
           curl -f http://localhost:5000/api/config || (docker logs nodejs-backend && exit 1)
+
+
+
+
