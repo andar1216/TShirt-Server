@@ -38,7 +38,6 @@ jobs:
       - self-hosted
       - linux
       - x64
-      - ec2
 
     steps:
       - name: Configure AWS credentials
@@ -62,9 +61,8 @@ jobs:
           docker stop nodejs-backend || true
           docker rm   nodejs-backend || true
 
-            - name: Start container with secrets
-        
-            run: |
+      - name: Start container with secrets
+        run: |
           IMAGE_URI=${{ steps.ecr-login-deploy.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
           docker run -d \
             --name nodejs-backend \
@@ -82,4 +80,4 @@ jobs:
       - name: Verify container is running
         run: |
           sleep 5
-          curl -f http://localhost:5000/api/config
+          curl -f http://localhost:5000/api/config || (docker logs nodejs-backend && exit 1)
