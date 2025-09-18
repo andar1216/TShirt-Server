@@ -24,7 +24,7 @@ console.log("ENV VARS", {
   PG_HOST: process.env.PG_HOST,
   PG_PORT: process.env.PG_PORT,
   PG_USER: process.env.PG_USER,
-  PG_PASSWORD: process.env.PG_PASSWORD ? "empty" : "(empty)",
+  PG_PASSWORD: process.env.PG_PASSWORD ? "(set)" : "(empty)",
   PG_DATABASE: process.env.PG_DATABASE,
   DATABASE_URL: process.env.DATABASE_URL,
 });
@@ -35,11 +35,11 @@ let poolConfig;
 if (process.env.NODE_ENV === "production") {
   // Aurora RDS
   poolConfig = {
-    host: process.env.PG_HOST,
-    port: +process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: process.env.PG_DATABASE,
+    host: process.env.PG_HOST || "aws-host",
+    port: +process.env.PG_PORT || 5432,
+    user: process.env.PG_USER || "postgresaws",
+    password: process.env.PG_PASSWORD || "emptyaws",
+    database: process.env.PG_DATABASE || "postgresaws", 
     ssl: { rejectUnauthorized: false } // Aurora needs SSL
   };
 } else {
