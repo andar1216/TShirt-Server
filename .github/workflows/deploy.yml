@@ -63,7 +63,8 @@ jobs:
           docker rm   nodejs-backend || true
 
             - name: Start container with secrets
-        run: |
+        
+            run: |
           IMAGE_URI=${{ steps.ecr-login-deploy.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
           docker run -d \
             --name nodejs-backend \
