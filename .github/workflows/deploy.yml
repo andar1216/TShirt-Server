@@ -62,7 +62,7 @@ jobs:
           docker stop nodejs-backend || true
           docker rm   nodejs-backend || true
 
-      - name: Start container with secrets
+            - name: Start container with secrets
         run: |
           IMAGE_URI=${{ steps.ecr-login-deploy.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}
           docker run -d \
@@ -71,6 +71,11 @@ jobs:
             -e NODE_ENV=production \
             -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
             -e STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} \
+            -e PG_HOST=${{ secrets.PG_HOST }} \
+            -e PG_PORT=${{ secrets.PG_PORT }} \
+            -e PG_USER=${{ secrets.PG_USER }} \
+            -e PG_PASSWORD=${{ secrets.PG_PASSWORD }} \
+            -e PG_DATABASE=${{ secrets.PG_DATABASE }} \
             $IMAGE_URI:${{ github.sha }}
 
       - name: Verify container is running
