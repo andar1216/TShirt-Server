@@ -1,0 +1,17 @@
+.env
+*.ini
+
+# dependencies
+node_modules/
+# IDE or OS cruft
+.vscode/
+*.lnk
+desktop.ini
+# documents
+*.pdf
+# build outputs
+dist/
+distribute/
+# any temp or copy folders
+/sweatshirt and mug - Copy/
+desktop.ini
