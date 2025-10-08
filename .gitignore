@@ -1,4 +1,7 @@
 .env
+.env.*
+*.env
+*.env.*.local
 *.ini
 
 # dependencies
@@ -15,3 +18,4 @@ distribute/
 # any temp or copy folders
 /sweatshirt and mug - Copy/
 desktop.ini
+
