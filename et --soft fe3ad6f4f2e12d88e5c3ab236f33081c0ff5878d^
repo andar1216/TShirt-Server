@@ -1,0 +1,303 @@
+[33mcommit 3fd1ba924d35dfeff55a5b2d4ebc721b05782860[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Sat Nov 8 14:47:58 2025 -0500
+
+    Cleanup
+
+[33mcommit 50d1fe1ab2f28b178527d80f0302e37c4a96c9e2[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed Oct 8 22:43:59 2025 -0400
+
+    Fix Stripe
+
+[33mcommit fe3ad6f4f2e12d88e5c3ab236f33081c0ff5878d[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed Oct 8 01:06:08 2025 -0400
+
+    Fix Stripe
+
+[33mcommit 34c9bd21d3988d8d859d11959bbbfb34c442783e[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed Oct 8 00:49:00 2025 -0400
+
+    Stripe Fixes
+
+[33mcommit fcd5aefabc7f296ecde3b150656852de682f9a3b[m[33m ([m[1;32mrescue-before-cherry-pick[m[33m)[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 19:54:19 2025 -0400
+
+    Trial Action
+
+[33mcommit d84276fa1b691ff7141071b35a60f463c0b74fe1[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 16:27:54 2025 -0400
+
+    Server Fixes
+
+[33mcommit 7e20c553ee4825b6b53ba3043000e8c824fb03d3[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 00:58:58 2025 -0400
+
+    Updated DB
+
+[33mcommit 48c4c723bf24d66bebc103e1149f03d755fc4ffe[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 00:55:34 2025 -0400
+
+    Updated Port to 5252
+
+[33mcommit e05d5080b184201266b9d659290803523ad6bf7e[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 00:53:11 2025 -0400
+
+    Runner Solving
+
+[33mcommit 34ed1470465965a6a75bb7ef6a35545af32baa5f[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 00:49:49 2025 -0400
+
+    Runner Push
+
+[33mcommit 30f8d53bb30745e88356eb3b93a5803f43f00c00[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 00:34:30 2025 -0400
+
+    Adjusting Runner File
+
+[33mcommit a7a14268a1c4e79ba797cea3e95ca98fe0c53e86[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 00:29:52 2025 -0400
+
+    Local server changed to 5000
+
+[33mcommit 208f71fed57b4cde4a558e4f166caf04de390227[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Sep 18 00:15:57 2025 -0400
+
+    Modified github workflow to allow Aurora DB
+
+[33mcommit 1f593d73b601b45dfc978bc8c5a09141df8f3ff3[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed Sep 17 21:33:32 2025 -0400
+
+    Initial Commit
+
+[33mcommit ccd0ba3cb3ce8e4e9f91e7d208ac8cd470b0d979[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed Sep 17 21:30:01 2025 -0400
+
+    Initial Server Commit
+
+[33mcommit eb18934f1f889943a95e3340f83420159bdf3485[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed Sep 17 18:42:55 2025 -0400
+
+    PG Aurora and Backend API Test
+
+[33mcommit 115930bc106ba2da20a1872d93d330355fdc3544[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 16:09:47 2025 -0400
+
+    Change ym file
+
+[33mcommit 20cbe69f913732571f4b05f1fb006f00a9ce558c[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 15:30:33 2025 -0400
+
+    Server test 1
+
+[33mcommit 02c83994b706409798c77e657c187556618b1626[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 14:05:33 2025 -0400
+
+    Fixing server
+
+[33mcommit 259eddab1bee99461cc30ab0092b56f7cc2e062f[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 14:01:42 2025 -0400
+
+    Test
+
+[33mcommit 44fbeef02aee53ad8a35cddf3059500b5552a0e4[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 13:21:22 2025 -0400
+
+    Hopefully its fixed now
+
+[33mcommit cfe4f0ed2cae934861188fe6adc0fe83d90a8699[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 00:39:24 2025 -0400
+
+    Stripe test 6?
+
+[33mcommit e2264b8e4a6b08bbb63359a9d7153e6ba47aa1ef[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 00:28:05 2025 -0400
+
+    Stripe test 5
+
+[33mcommit 3bbc0976bee6a32d0a550aa7faa5812ac1c3549e[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Mon Sep 1 00:26:27 2025 -0400
+
+    test 4 stripe
+
+[33mcommit d59a2f1048fbde7b765b74103f9d924df52e7151[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Sun Aug 31 23:57:35 2025 -0400
+
+    trigger deploy 3
+
+[33mcommit a5d19a14cbce0839d65bf383d2463628d3b43620[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Sun Aug 31 23:21:49 2025 -0400
+
+    trigger deploy 2
+
+[33mcommit d019310acd3d54a55060b1ff0697c12a0f18c3b8[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Sun Aug 31 23:12:03 2025 -0400
+
+    trigger deploy
+
+[33mcommit 59e9df39d03069dee12a0c46270991ef9e06e0d2[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Sat Aug 30 23:02:35 2025 -0400
+
+    We are so back
+
+[33mcommit 65f4f73448e03a611e920150656de9948f2b30ed[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed May 28 22:42:17 2025 -0400
+
+    Refresh 5.28.2025
+
+[33mcommit dccf350aacb050dae532615ae792dedf010e9691[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Fri May 16 02:33:36 2025 -0400
+
+    Signing Off for the night
+
+[33mcommit 013e3fb9583c104ba3c2c44de8728ddb7b0f3200[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 20:52:34 2025 -0400
+
+    Try #19
+
+[33mcommit 04148e9e75cf8dd9c13cd25862f7ec9895784b95[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:41:25 2025 -0400
+
+    Workflow test 18
+
+[33mcommit bd730894572ef8c13877ae4f37583e2470c190a9[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:37:17 2025 -0400
+
+    Workflow test 17
+
+[33mcommit 02101e0f067dd5719247882938ad021677dff833[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:28:39 2025 -0400
+
+    workflow test 16
+
+[33mcommit d715b1ba243336ef82dbc96b42e87db3cd54c04f[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:25:22 2025 -0400
+
+    Workflow test 12
+
+[33mcommit 38ab793b1ead2b337cdbfaa012933e5d7f3d4c3f[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:22:53 2025 -0400
+
+    Workflow test 12
+
+[33mcommit 85182ca415db3623cf941d8e3fbd430c5c5dc266[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:17:48 2025 -0400
+
+    Workflow test 11
+
+[33mcommit 0e437e66678a69fd2072b07de0292008d1260119[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:13:35 2025 -0400
+
+    Workflow test 10
+
+[33mcommit a2b637759cf024ba27245ad47924ce7acfa0b1c0[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:05:11 2025 -0400
+
+    Workflow test 9
+
+[33mcommit d556faa96bb54eb002fe876165128b352620cc23[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 19:03:55 2025 -0400
+
+    workflow test 8
+
+[33mcommit ab8cf7b11d4e02075bfb718b0b4fb80dc6876cc3[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 18:58:21 2025 -0400
+
+    Workflow test 7
+
+[33mcommit 5ca055a09d87a2193034679bd0c9ef9891b92178[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 16:42:06 2025 -0400
+
+    Workflow try 6
+
+[33mcommit aad817940921b4fae99ae349d65b8b3b1e0285c8[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 16:31:17 2025 -0400
+
+    Workflow test 5
+
+[33mcommit ce9b14db4a2829325f59ee2991d8462093e28e92[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 16:24:01 2025 -0400
+
+    Workflow try 4
+
+[33mcommit c1937506e75e236c715a68d0315d57132832ae34[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 16:17:45 2025 -0400
+
+    Test flow 3
+
+[33mcommit fe648ce5a91523aac880be598304db752712d129[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 16:13:10 2025 -0400
+
+    Test workflow 2
+
+[33mcommit a1ea3e2f06c1736edf52e3a2a0c3ca7ef78cfece[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 15 16:09:41 2025 -0400
+
+    Test Workflow 1
+
+[33mcommit b0b44e5610df57061275d8f7ed0c6f1c500c79f2[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Wed May 14 00:23:55 2025 -0400
+
+    Moving Folders Backup
+
+[33mcommit 522d8360f388a89edd7fd38373ea035619fac3d4[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu May 8 20:51:33 2025 -0400
+
+    Update to master branch
+
+[33mcommit 4a61665fe35004441b03913556eb4a556f2f60b2[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Tue Apr 1 18:17:00 2025 -0400
+
+    Update
+
+[33mcommit 43069c77a79b027cfd58a7da1ff277f22fb94944[m
+Author: andar1216 <ingramaj26@gmail.com>
+Date:   Thu Mar 6 00
