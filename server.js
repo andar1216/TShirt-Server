@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
 import pkg from "pg";
 import bcrypt from "bcryptjs";
 
@@ -68,6 +69,19 @@ pool.connect((err, client, release) => {
 });
 
 // -----------------
+// MongoDB (Mongoose)
+// -----------------
+const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGO_URI;
+if (MONGODB_URI) {
+  mongoose
+    .connect(MONGODB_URI)
+    .then(() => console.log("Connected to MongoDB"))
+    .catch((err) => console.error("MongoDB connection error:", err.message));
+} else {
+  console.log("MONGODB_URI not set — skipping MongoDB connection");
+}
+
+// -----------------
 // Middleware & CORS
 // -----------------
 if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PUBLISHABLE_KEY) {
@@ -77,7 +91,7 @@ if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PUBLISHABLE_KEY) {
 
 const allowedOrigins =
   process.env.NODE_ENV === "production"
-    ? ["https://sattire.store"]
+    ? ["https://sattire.com"]
     : [
         "http://localhost:5173",
         "http://localhost:5174",
@@ -119,8 +133,10 @@ import picturesRoute from "./routes/pictures.js";
 import printfulRoutes from "./routes/printful.js";
 import stripeRoutes from "./routes/stripe.js";
 import userRoutes from "./routes/users/user.js";
+import restrictedRoute from "./routes/restricted.js";
 
 app.use("/api/products", productsRoute);
+app.use("/api/restricted", restrictedRoute);
 app.use("/api/pictures", picturesRoute);
 app.use("/api/printful", printfulRoutes);
 app.use("/api/stripe", stripeRoutes);
@@ -182,6 +198,16 @@ app.get("/api/test-error", (req, res) => {
 // -----------------
 app.get("/api/config", (req, res) => {
   res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY });
+});
+
+// -----------------
+// NextAuth API stub (returns 404 until you implement full NextAuth)
+// Prevents /api/auth/* from returning SPA HTML
+// -----------------
+app.use("/api/auth", (req, res) => {
+  res.status(404).json({
+    error: "Auth API not configured. See AUTH_SETUP.md for setup instructions.",
+  });
 });
 
 // -----------------
